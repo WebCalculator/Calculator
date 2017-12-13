@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+<title>CALCULATOR</title>
+<link href="Mystyle.css" rel="stylesheet">
+</head>
+
+<body style="background: #0029ED; background-image:
+    radial-gradient(40% 20% ellipse at center top, #03CBF4 0%, rgba(0,0,0,0) 100%),
+    radial-gradient(50% 40% ellipse at center bottom, #03CBF4 0%, #100a1c 100%);
+  background-attachment: fixed;
+  color: #6cacc5;">
+
+	<table style="background-color: #808080; margin: auto; margin-top:10px">
+	
+		<tr>
+		<tr><center><h1 style="margin-top: 120px">CALCULATOR MINI</h1></center></tr>
+			<td colspan="5"> <input id="Result" style = "width: 190px; height: 30px" type = "text"/>
+			<button onClick="rs();" style="width: 73px; height: 40px">--></button>
+			</td>
+		</tr>
+		<tr>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "7" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "8" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "9" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "/" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "<--" onClick="Result.value=Result.value.substr(0, Result.value.length-1)"/></td>
+		</tr>
+		<tr>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "4" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "5" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "6" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "*" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "C" onClick="Result.value=''"/></td>
+		</tr>
+		<tr>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "1" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "2" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "3" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "+" onClick="Result.value+=this.value"/></td>
+			<td rowspan ="2"><input id = "equ" class= "btn" style="width: 50px; height: 99px;" type = "button" value = "=" onClick="Result.value = eval(Result.value)"/>
+			
+			</td>
+			<div id="hien"></div>
+		</tr>
+		<tr>
+			<td colspan="2"><input id = "zero" class= "btn" style="width: 105px; height: 48px;" type = "button" value = "0" onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "." onClick="Result.value+=this.value"/></td>
+			<td><input class= "btn" style="width: 50px; height: 48px;" type = "button" value = "-" onClick="Result.value+=this.value"/></td>
+		</tr>
+	</table>
+</body>
+<script>
+	var socket=io.connect("192.168.0.110:3000");
+	socket.on('connect',function (){
+	socket.on('t1',function (msg)
+	{
+		document.getElementById('hienthi').innerHTML = msg+"</br>"+document.getElementById('hienthi').innerHTML;
+	});
+	});
+	function rs()
+	{
+		socket.emit('thu1',$('#Result').val());
+		$('#Result').val();
+	}
+</script>
+</html>
